@@ -1,0 +1,34 @@
+version: "3.5"
+services:
+  myzapdev:
+    build: 
+      context: .
+      target: z4ydev
+    container_name: z4ydev
+    working_dir: /usr/src/app
+    volumes:
+      - ${PATH_LOCAL}:/usr/src/app
+    ports:
+      - 3333:${HOST_PORT}
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    networks:
+      backend:
+        aliases:
+          - z4ydev
+
+  myzapprod:
+    build: 
+      context: .
+      target: z4ydevprod
+    container_name: z4ydevprod
+#    image: gcr.io/maisagil/myzap
+    ports:
+      - 3333:${HOST_PORT}
+    networks:
+      backend:
+        aliases:
+          - z4ydevprod
+networks:
+  backend:
+    name: z4ynetwork
