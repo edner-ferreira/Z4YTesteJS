@@ -353,6 +353,7 @@ module.exports = class Sessions {
         if (session) {
             if (session.state == "CONNECTED") {
                 numVerifica = await Sessions.checkNumberStatus(params.sessionName, params.number);
+                //console.log(numVerifica);
                if(numVerifica === 200){
                     await session.client.then(async client => {
                         return await client.sendText(params.number + '@c.us', params.text);
@@ -400,7 +401,7 @@ module.exports = class Sessions {
 
     static async sendFile(sessionName, number, fileName, caption) {
         var session = Sessions.getSession(sessionName);
-        var pathFile = '/usr/src/app/tmp/' + fileName;
+        var pathFile = '/home/richard/Documents/Z4YTesteJS/tmp/' + fileName;
 
         if (session) {
             if (session.state == "CONNECTED") {
@@ -622,9 +623,12 @@ module.exports = class Sessions {
         var session = Sessions.getSession(sessionName);
         if (session) {
             if (session.state == "CONNECTED") {
-                var resultcheckNumberStatus = await session.client.then(async (client) => {
-                    return await client.checkNumberStatus(number + '@c.us');
-                });
+        //         var resultcheckNumberStatus = await session.client.then(async (client) => {
+        //             return await client.checkNumberStatus(number + '@c.us');
+        //         });
+            var resultcheckNumberStatus = await session.client.then(async (client) => {
+                return await client.getNumberProfile(number + '@c.us');
+            });
                 if(resultcheckNumberStatus.status === 200){
                     return resultcheckNumberStatus.status;
                 } else {
@@ -633,7 +637,7 @@ module.exports = class Sessions {
             } else {
                 return {
                     result: "error",
-                    message: session.state
+                    message: "ERROR"
                 };
             }
         } else {
@@ -642,6 +646,24 @@ module.exports = class Sessions {
                 message: "NOTFOUND"
             };
         }
+        // var session = Sessions.getSession(sessionName);
+        
+        // try {
+        // // const response = await session.client.getNumberProfile(number + '@c.us');
+        // var resultcheckNumberStatus = await session.client.then(async (client) => {
+        //                 return await client.getNumberProfile(number + '@c.us');
+        //             });
+        // console.log(resultcheckNumberStatus);
+        // return {
+        //     result: 200
+        // };
+        // } catch (error) {
+        // return {
+        //     result: 400,
+        //     message: "NOTFOUND"
+        // };
+        // }
+    
     } //saber se o número é válido
 
     static async getNumberProfile(sessionName, number) {

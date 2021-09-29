@@ -44,7 +44,7 @@ RUN apt-get update && apt-get install -y \
     && apt-get install -y chromium-browser \
     && apt-get install nano \
     && apt-get install curl -y \
-    && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
+    && curl -sL https://deb.nodesource.com/setup_16.x | bash - \
     && apt-get install -y \
     git \
     nodejs

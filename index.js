@@ -127,7 +127,7 @@ app.post("/sendTextToStorie", async (req, res, next) => {
 }); //sendTextToStorie
 
 app.post("/sendFile", async (req, res, next) => {
-    // console.log(req);
+    //console.log(req);
     var result = await Sessions.sendFile(
         req.query.sessionName,
         req.query.number,
